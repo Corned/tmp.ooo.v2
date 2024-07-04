@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Rombi Technocrat Bold";
+  src: url(/src/assets/fonts/RombiTechnocratPersonalBold-51APB.otf);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, :root {
+  height: 100%;
+}
+
+h1, h2, h3 {
+  font-family: "Rombi Technocrat Bold"
+}
