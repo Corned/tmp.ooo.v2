@@ -7,8 +7,28 @@
   src: url(/src/assets/fonts/RombiTechnocratPersonalBold-51APB.otf);
 }
 
+@font-face {
+  font-family: "FiraCode Regular";
+  src: url(/src/assets/fonts/FiraCode-Regular.ttf);
+}
+
+
 * {
   box-sizing: border-box;
+  font-family: monospace;
+  color: white;
+
+  margin: 0;
+  padding: 0;
+}
+
+*::selection {
+  background-color: red;
+  color: black;
+}
+
+html {
+  overflow: hidden;
 }
 
 html, body, :root {
@@ -16,5 +36,51 @@ html, body, :root {
 }
 
 h1, h2, h3 {
-  font-family: "Rombi Technocrat Bold"
+  font-family: "Rombi Technocrat Bold";
+  font-display: swap;
+
+  transition: all 0.2s linear; 
+}
+
+.breathing-text {
+  animation-name: breathing-text;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.link-button {
+  position: relative;
+  color: white;
+  padding: 2px 4px 2px 2px;
+  width: 100%;
+  text-align: left;
+}
+
+.link-button:hover {
+  background-color: white;
+  color: black;
+}
+
+@keyframes breathing-text {
+  0% {
+    letter-spacing: 0px;
+    text-shadow: rgba(255, 255, 255, 0.1) 0 0 50px;
+  }
+
+  50% {
+    letter-spacing: 0.05em;
+    text-shadow: rgba(255, 255, 255, 0) 0 0 50px;
+  }
+rgba(73, 23, 23, 0.1)
+  100% {
+    letter-spacing: 0px;
+    text-shadow: rgba(255, 255, 255, 0.1) 0 0 50px;
+  }
+}
+
+
+
+.terminal {
+  border: 1px solid #333333;
 }
