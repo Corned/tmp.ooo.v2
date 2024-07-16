@@ -12,10 +12,25 @@
   src: url(/src/assets/fonts/FiraCode-Regular.ttf);
 }
 
+@font-face {
+  font-family: "Roboto Mono";
+  src: url(/src/assets/fonts/RobotoMono-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: "Rubik";
+  src: url(/src/assets/fonts/Rubik-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family: "Lexend";
+  src: url(/src/assets/fonts/Lexend-VariableFont_wght.ttf);
+}
+
 
 * {
   box-sizing: border-box;
-  font-family: monospace;
+  font-family: "Roboto Mono";
   color: white;
 
   margin: 0;
@@ -40,11 +55,19 @@ h1, h2, h3 {
   font-display: swap;
 
   transition: all 0.2s linear; 
+
 }
 
 .breathing-text {
   animation-name: breathing-text;
   animation-duration: 4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+
+.breathing-weight {
+  animation-name: breathing-weight;
+  animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
 }
@@ -72,13 +95,33 @@ h1, h2, h3 {
     letter-spacing: 0.05em;
     text-shadow: rgba(255, 255, 255, 0) 0 0 50px;
   }
-rgba(73, 23, 23, 0.1)
+  
   100% {
     letter-spacing: 0px;
     text-shadow: rgba(255, 255, 255, 0.1) 0 0 50px;
   }
 }
 
+
+@keyframes breathing-weight {
+  0% {
+    font-weight: 400;
+    letter-spacing: 0px;
+    text-shadow: rgba(255, 255, 255, 0.1) 0 0 50px;
+  }
+
+  50% {
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-shadow: rgba(255, 255, 255, 0) 0 0 50px;
+  }
+
+  100% {
+    font-weight: 400;
+    letter-spacing: 0px;
+    text-shadow: rgba(255, 255, 255, 0.1) 0 0 50px;
+  }
+}
 
 
 .terminal {

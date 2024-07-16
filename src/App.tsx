@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
 
 function App() {
+
+
+  const headerString = "hello world_"
+  const spans = headerString.split("").map((char, index) => (
+    <span className="breathing-weight" style={{ animationDelay: `${index*(1000/headerString.length)}ms` }} >{ char }</span>
+  ))
+
   return (
     <div className="bg-black w-full h-screen flex flex-col items-center justify-center">
 
@@ -15,7 +22,9 @@ function App() {
 
       <div className="terminal rounded w-[500px] py-2 px-4">
         <div className="terminal__input">
-          <p> { "> _" }</p>
+          <p>
+            <span>{"> "}</span>{spans}
+          </p>
         </div>
       </div>
 
