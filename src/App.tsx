@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from "react"
+import useTerminal from "./lib/terminal/terminal"
+import { Command } from "./types/command"
 
 const Header = () => {
   return (
-    <div className={`absolute top-0 left-0 w-full px-6 py-4`}>
+    <div className={`absolute left-0 top-0 w-full px-6 py-4`}>
       <h1
-        className={`text-white select-none breathing-text transition-all duration-500 ease-in-out text-left text-6xl`}
+        className={`breathing-text select-none text-left text-6xl text-white transition-all duration-500 ease-in-out`}
         style={{ textShadow: "rgba(255, 255, 255, 0.1) 0 0 50px" }}
       >
         TMP.OOO
@@ -13,20 +15,15 @@ const Header = () => {
   )
 }
 
-interface Command {
-  id: number
-  prompt: string
-  body: string
-  timestamp: Date
-}
-
-
 function App() {
-
-
-  const [ commandHistory, setCommandHistory ] = useState<string[]>([ "hello", "world" ])
-  const [ currentCommand, setCurrentCommand ] = useState<string>("")
-  const [ historyIndex, setHistoryIndex ] = useState<number>(-1)
+  const [
+    setPrompt,
+    commandHistory,
+    addCommandToHistory,
+    clearCommandHistory,
+    run,
+  ] = useTerminal()
+  const [currentCommand, setCurrentCommand] = useState<string>("")
   const inputRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
@@ -36,38 +33,37 @@ function App() {
   const handleInput = (e: React.FormEvent<HTMLSpanElement>) => {
     const text = e.currentTarget.textContent || ""
     setCurrentCommand(text)
-    console.log(text)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     if (e.key === "Enter") {
       e.preventDefault()
       if (currentCommand.trim() !== "") {
-        setCommandHistory([...commandHistory, currentCommand])
+        run(currentCommand)
         setCurrentCommand("")
         if (inputRef.current) {
           inputRef.current.textContent = ""
         }
-        setHistoryIndex(-1)
       }
     }
   }
 
   return (
-    <div className="bg-black h-screen flex flex-col justify-center">
-
+    <div className="flex h-screen flex-col justify-center bg-black">
       <Header />
 
-      <div className="terminal px-2 py-1 rounded w-[600px] h-[400px] flex flex-col items-center justify-items-center mx-auto mb-20">
-        <div className="flex flex-col w-full mt-auto">
-          {commandHistory.map((command, index) => (
-            <div key={index} className="text-white font-mono flex-grow-0">
-              <p className="break-words text-xs font-semibold">{command}</p>
+      <div className="terminal mx-auto mb-20 flex h-[400px] w-[600px] flex-col items-center justify-items-center rounded px-2 py-1">
+        <div className="mt-auto flex w-full flex-col">
+          {commandHistory.map((command: Command, index) => (
+            <div key={index} className="flex-grow-0 font-mono text-white">
+              <p className="break-all text-xs font-semibold">
+                {command.prompt} {command.body}
+              </p>
             </div>
           ))}
         </div>
-        <div className="flex flex-row w-full">
-          <p className="select-none text-xs whitespace-pre max-w-full text-wrap break-all">
+        <div className="flex w-full flex-row">
+          <p className="max-w-full select-none whitespace-pre text-wrap break-all text-xs">
             <span className="text-yellow-400">~</span>
             <span className="">{" > "}</span>
             <span
@@ -75,12 +71,11 @@ function App() {
               ref={inputRef}
               onInput={handleInput}
               onKeyDown={handleKeyDown}
-              className="border-none w-full outline-none">
-            </span>
+              className="w-full border-none outline-none"
+            ></span>
           </p>
         </div>
       </div>
-
     </div>
   )
 }
