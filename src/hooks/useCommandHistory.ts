@@ -17,11 +17,7 @@ const useCommandHistory = () => {
     setHistory([])
   }
 
-  return {
-    history,
-    addCommand,
-    clearHistory,
-  }
+  return [history, addCommand, clearHistory]
 }
 
 export default useCommandHistory
