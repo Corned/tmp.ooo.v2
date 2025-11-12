@@ -13,12 +13,18 @@ const Header = () => {
   )
 }
 
+interface Command {
+  id: number
+  prompt: string
+  body: string
+  timestamp: Date
+}
 
 
 function App() {
 
 
-  const [ commandHistory, setCommandHistory ] = useState<string[]>([ "hello", "world"])
+  const [ commandHistory, setCommandHistory ] = useState<string[]>([ "hello", "world" ])
   const [ currentCommand, setCurrentCommand ] = useState<string>("")
   const [ historyIndex, setHistoryIndex ] = useState<number>(-1)
   const inputRef = useRef<HTMLSpanElement>(null)
