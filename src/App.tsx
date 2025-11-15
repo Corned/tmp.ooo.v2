@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import useTerminal from "./lib/terminal/terminal"
+import useTerminal from "./hooks/useTerminal"
 import { Command } from "./types/command"
 
 const Header = () => {
@@ -16,37 +16,13 @@ const Header = () => {
 }
 
 function App() {
-  const [
-    setPrompt,
-    commandHistory,
-    addCommandToHistory,
-    clearCommandHistory,
-    run,
-  ] = useTerminal()
-  const [currentCommand, setCurrentCommand] = useState<string>("")
-  const inputRef = useRef<HTMLSpanElement>(null)
+  const { commandHistory, handleInput, handleKeyDown, inputRef } = useTerminal()
 
   useEffect(() => {
-    inputRef.current?.focus()
-  }, [])
-
-  const handleInput = (e: React.FormEvent<HTMLSpanElement>) => {
-    const text = e.currentTarget.textContent || ""
-    setCurrentCommand(text)
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault()
-      if (currentCommand.trim() !== "") {
-        run(currentCommand)
-        setCurrentCommand("")
-        if (inputRef.current) {
-          inputRef.current.textContent = ""
-        }
-      }
+    if (inputRef.current) {
+      inputRef.current.focus()
     }
-  }
+  }, [inputRef])
 
   return (
     <div className="flex h-screen flex-col justify-center bg-black">
