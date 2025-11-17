@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react"
 import useTerminal from "@/hooks/useTerminal"
 import { ICommand } from "@/types/command"
+import { useEffect } from "react"
 
 const Header = () => {
   return (
@@ -22,6 +22,15 @@ function App() {
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
+      inputRef.current.onblur = () => {
+        inputRef.current?.focus()
+      }
+    }
+
+    return () => {
+      if (inputRef.current) {
+        inputRef.current.onblur = null
+      }
     }
   }, [inputRef])
 
