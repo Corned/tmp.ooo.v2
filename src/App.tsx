@@ -16,7 +16,8 @@ const Header = () => {
 }
 
 function App() {
-  const { commandHistory, handleInput, handleKeyDown, inputRef } = useTerminal()
+  const { prompt, commandHistory, handleInput, handleKeyDown, inputRef } =
+    useTerminal()
 
   useEffect(() => {
     if (inputRef.current) {
@@ -40,8 +41,7 @@ function App() {
         </div>
         <div className="flex w-full flex-row">
           <p className="max-w-full select-none whitespace-pre text-wrap break-all text-xs">
-            <span className="text-yellow-400">~</span>
-            <span className="">{" > "}</span>
+            <span>{`${prompt} `}</span>
             <span
               contentEditable
               ref={inputRef}

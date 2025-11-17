@@ -3,7 +3,7 @@ import parseCommand from "@/lib/commands/parseCommand"
 import { useState, useRef } from "react"
 
 const useTerminal = () => {
-  const [prompt, setPrompt] = useState<string>("~ > ")
+  const [prompt, setPrompt] = useState<string>("[tmp.ooo] #")
   const [currentCommand, setCurrentCommand] = useState<string>("")
   const inputRef = useRef<HTMLSpanElement>(null)
 
@@ -30,17 +30,12 @@ const useTerminal = () => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     if (!inputRef.current) return
 
+    // Submit
     if (e.key === "Enter") {
       e.preventDefault()
       if (currentCommand.trim() !== "") {
         run(currentCommand)
-        setCurrentCommand("")
-        if (inputRef.current) {
-          inputRef.current.textContent = ""
-        }
       }
-
-      return
     }
 
     const text = e.currentTarget.textContent || ""
@@ -48,11 +43,11 @@ const useTerminal = () => {
   }
 
   return {
+    prompt,
     setPrompt,
     commandHistory,
     addCommandToHistory,
     clearCommandHistory,
-    run,
     handleInput,
     handleKeyDown,
     inputRef,
