@@ -1,9 +1,9 @@
 import useCommandHistory from "@/hooks/useCommandHistory"
-import parseCommand from "@/lib/commands/parseCommand"
+import parseCommand from "@/lib/terminal/parseCommand"
 import { useState, useRef } from "react"
 
 const useTerminal = () => {
-  const [prompt, setPrompt] = useState<string>("[tmp.ooo] #")
+  const [prompt, setPrompt] = useState<string>("guest:~ $")
   const [currentCommand, setCurrentCommand] = useState<string>("")
   const inputRef = useRef<HTMLSpanElement>(null)
 
@@ -19,10 +19,13 @@ const useTerminal = () => {
 
     const [program, args] = parseCommand(commandString)
     console.log(program, args)
+    if (inputRef.current) {
+      setCurrentCommand("")
+      inputRef.current.textContent = ""
+    }
   }
 
-  const handleInput = (e: React.FormEvent<HTMLSpanElement>) => {
-    if (!inputRef.current) return
+  const handleInput = (e: React.KeyboardEvent<HTMLSpanElement>) => {
     const text = e.currentTarget.textContent || ""
     setCurrentCommand(text)
   }
@@ -33,13 +36,8 @@ const useTerminal = () => {
     // Submit
     if (e.key === "Enter") {
       e.preventDefault()
-      if (currentCommand.trim() !== "") {
-        run(currentCommand)
-      }
+      run(currentCommand)
     }
-
-    const text = e.currentTarget.textContent || ""
-    setCurrentCommand(text)
   }
 
   return {

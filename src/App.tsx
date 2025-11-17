@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
-import useTerminal from "./hooks/useTerminal"
-import { ICommand } from "./types/command"
+import useTerminal from "@/hooks/useTerminal"
+import { ICommand } from "@/types/command"
 
 const Header = () => {
   return (
@@ -29,18 +29,18 @@ function App() {
     <div className="flex h-screen flex-col justify-center bg-black">
       <Header />
 
-      <div className="terminal mx-auto mb-20 flex h-[400px] w-[600px] flex-col items-center justify-items-center rounded px-2 py-1">
-        <div className="mt-auto flex w-full flex-col">
-          {commandHistory.map((command: Command, index) => (
+      <div className="terminal mx-auto mb-20 flex h-[400px] w-[600px] flex-col items-center justify-items-center rounded p-1">
+        <div className="overflow-y mt-auto flex w-full flex-col">
+          {commandHistory.map((command: ICommand, index) => (
             <div key={index} className="flex-grow-0 font-mono text-white">
-              <p className="break-all text-xs font-semibold">
+              <p className="break-all text-xs">
                 {command.prompt} {command.body}
               </p>
             </div>
           ))}
         </div>
         <div className="flex w-full flex-row">
-          <p className="max-w-full select-none whitespace-pre text-wrap break-all text-xs">
+          <p className="max-w-full select-none whitespace-pre text-wrap break-all text-xs font-semibold">
             <span>{`${prompt} `}</span>
             <span
               contentEditable
