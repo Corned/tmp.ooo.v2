@@ -1,11 +1,11 @@
-import { Command } from "@/types/command"
+import { ICommand } from "@/types/command"
 import { useState } from "react"
 
 const useCommandHistory = () => {
-  const [history, setHistory] = useState<Command[]>([])
+  const [history, setHistory] = useState<ICommand[]>([])
 
   const addCommand = (prompt: string, body: string) => {
-    const newCommand: Command = {
+    const newCommand: ICommand = {
       id: crypto.randomUUID(),
       prompt,
       body,

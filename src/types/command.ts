@@ -1,4 +1,4 @@
-export interface Command {
+export interface ICommand {
   id: string
   prompt: string
   body: string
