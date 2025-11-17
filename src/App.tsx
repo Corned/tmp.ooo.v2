@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import useTerminal from "./hooks/useTerminal"
-import { Command } from "./types/command"
+import { ICommand } from "./types/command"
 
 const Header = () => {
   return (
