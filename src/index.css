@@ -27,7 +27,6 @@
   src: url(/src/assets/fonts/Lexend-VariableFont_wght.ttf);
 }
 
-
 * {
   box-sizing: border-box;
   font-family: "Roboto Mono";
@@ -46,16 +45,19 @@ html {
   overflow: hidden;
 }
 
-html, body, :root {
+html,
+body,
+:root {
   height: 100%;
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: "Rombi Technocrat Bold";
   font-display: swap;
 
-  transition: all 0.2s linear; 
-
+  transition: all 0.2s linear;
 }
 
 .breathing-text {
@@ -95,13 +97,12 @@ h1, h2, h3 {
     letter-spacing: 0.05em;
     text-shadow: rgba(255, 255, 255, 0) 0 0 50px;
   }
-  
+
   100% {
     letter-spacing: 0px;
     text-shadow: rgba(255, 255, 255, 0.1) 0 0 50px;
   }
 }
-
 
 @keyframes breathing-weight {
   0% {
@@ -122,7 +123,6 @@ h1, h2, h3 {
     text-shadow: rgba(255, 255, 255, 0.1) 0 0 50px;
   }
 }
-
 
 .terminal {
   border: 1px solid #333333;
