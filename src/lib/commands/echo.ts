@@ -1,3 +1,3 @@
-export default function () {
-  return "echo command executed"
+export default function (str: string[]): string {
+  return `Echo: ${str.join(" ")}`;
 }
