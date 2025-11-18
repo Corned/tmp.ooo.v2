@@ -11,7 +11,7 @@ const useHistory = () => {
       body,
       timestamp: new Date(),
     }
-    setHistory([...history, newCommand])
+    setHistory(prevHistory => [...prevHistory, newCommand])
   }
   const clear = () => {
     setHistory([])
