@@ -1,9 +1,9 @@
-export default function parseCommand(command: string) {
+export default function parseCommand(command: string): [string, string[]] {
   const [program, ...rest] = command.split(" ")
-  const tokens = []
+  const tokens: string[] = []
 
   let currentToken = ""
-  let quoteType = null
+  let quoteType: string | null = null
 
   for (const c of rest.join(" ")) {
     // Check for quotes
