@@ -1,24 +1,31 @@
-import useCommandHistory from "@/hooks/useCommandHistory"
+import useHistory from "@/hooks/useHistory"
 import parseCommand from "@/lib/terminal/parseCommand"
 import { useState, useRef } from "react"
+
+import commands from "@/lib/commands"
 
 const useTerminal = () => {
   const [prompt, setPrompt] = useState<string>("guest:~ $")
   const [currentCommand, setCurrentCommand] = useState<string>("")
   const inputRef = useRef<HTMLSpanElement>(null)
 
-  const {
-    history: commandHistory,
-    addCommand: addCommandToHistory,
-    clearHistory: clearCommandHistory,
-  } = useCommandHistory()
+  const history = useHistory()
 
   const run = (str: string) => {
     const commandString = str.trim()
-    addCommandToHistory(prompt, commandString)
+    history.append(prompt, commandString)
 
     const [program, args] = parseCommand(commandString)
     console.log(program, args)
+
+    if (program && commands[program]) {
+      console.log(`Running command: ${program} with args:`, args)
+      const output = commands[program](args)
+      history.append("", output)
+    } else {
+      console.log(`Command not found: ${program}`)
+    }
+
     if (inputRef.current) {
       setCurrentCommand("")
       inputRef.current.textContent = ""
@@ -41,11 +48,9 @@ const useTerminal = () => {
   }
 
   return {
+    history: history.history, // ew
     prompt,
     setPrompt,
-    commandHistory,
-    addCommandToHistory,
-    clearCommandHistory,
     handleInput,
     handleKeyDown,
     inputRef,

@@ -1,10 +1,10 @@
 import { ICommand } from "@/types/command"
 import { useState } from "react"
 
-const useCommandHistory = () => {
+const useHistory = () => {
   const [history, setHistory] = useState<ICommand[]>([])
 
-  const addCommand = (prompt: string, body: string) => {
+  const append = (prompt: string, body: string) => {
     const newCommand: ICommand = {
       id: crypto.randomUUID(),
       prompt,
@@ -13,15 +13,15 @@ const useCommandHistory = () => {
     }
     setHistory([...history, newCommand])
   }
-  const clearHistory = () => {
+  const clear = () => {
     setHistory([])
   }
 
   return {
     history,
-    addCommand,
-    clearHistory,
+    append,
+    clear,
   }
 }
 
-export default useCommandHistory
+export default useHistory

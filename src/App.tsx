@@ -16,7 +16,7 @@ const Header = () => {
 }
 
 function App() {
-  const { prompt, commandHistory, handleInput, handleKeyDown, inputRef } =
+  const { history, prompt, handleInput, handleKeyDown, inputRef } =
     useTerminal()
 
   useEffect(() => {
@@ -34,7 +34,7 @@ function App() {
 
       <div className="terminal mx-auto mb-20 flex h-[400px] w-[600px] flex-col items-center justify-items-center rounded p-1 bg-black">
         <div className="overflow-y mt-auto flex w-full flex-col">
-          {commandHistory.map((command: ICommand, index) => (
+          {history.map((command: ICommand, index) => (
           <div key={index} className="flex-grow-0 font-mono text-white">
             <p className="break-all text-xs">
             {command.prompt} {command.body}
