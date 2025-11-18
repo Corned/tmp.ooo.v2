@@ -26,38 +26,32 @@ function App() {
         inputRef.current?.focus()
       }
     }
-
-    return () => {
-      if (inputRef.current) {
-        inputRef.current.onblur = null
-      }
-    }
   }, [inputRef])
 
   return (
-    <div className="flex h-screen flex-col justify-center bg-black">
+    <div className="flex h-screen flex-col justify-center" style={{ backgroundColor: "#16161d" }}>
       <Header />
 
-      <div className="terminal mx-auto mb-20 flex h-[400px] w-[600px] flex-col items-center justify-items-center rounded p-1">
+      <div className="terminal mx-auto mb-20 flex h-[400px] w-[600px] flex-col items-center justify-items-center rounded p-1 bg-black">
         <div className="overflow-y mt-auto flex w-full flex-col">
           {commandHistory.map((command: ICommand, index) => (
-            <div key={index} className="flex-grow-0 font-mono text-white">
-              <p className="break-all text-xs">
-                {command.prompt} {command.body}
-              </p>
-            </div>
+          <div key={index} className="flex-grow-0 font-mono text-white">
+            <p className="break-all text-xs">
+            {command.prompt} {command.body}
+            </p>
+          </div>
           ))}
         </div>
         <div className="flex w-full flex-row">
           <p className="max-w-full select-none whitespace-pre text-wrap break-all text-xs font-semibold">
-            <span>{`${prompt} `}</span>
-            <span
-              contentEditable
-              ref={inputRef}
-              onInput={handleInput}
-              onKeyDown={handleKeyDown}
-              className="w-full border-none outline-none"
-            ></span>
+          <span>{`${prompt} `}</span>
+          <span
+            contentEditable
+            ref={inputRef}
+            onInput={handleInput}
+            onKeyDown={handleKeyDown}
+            className="w-full border-none outline-none"
+          ></span>
           </p>
         </div>
       </div>
