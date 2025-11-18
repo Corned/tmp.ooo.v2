@@ -16,11 +16,10 @@ const useTerminal = () => {
     history.append(prompt, commandString)
 
     const [program, args] = parseCommand(commandString)
-    console.log(program, args)
 
     if (program && commands[program]) {
       console.log(`Running command: ${program} with args:`, args)
-      const output = commands[program](args)
+      const output = commands[program](...args)
       history.append("", output)
     } else {
       console.log(`Command not found: ${program}`)

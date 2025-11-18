@@ -1,7 +1,9 @@
 import echo from "./echo";
 import helloworld from "./helloworld";
 
-export default {
+const commands = {
   echo,
   helloworld,
 };
+
+export default commands as Record<string, (...args: string[]) => string>;
