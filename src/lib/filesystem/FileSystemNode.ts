@@ -1,12 +1,12 @@
-import Directory from "./directory";
+import Directory from "./directory"
 
 interface FileSystemNode {
-  name: string;
-  getType(): "File" | "Directory";
-  getParent(): Directory | null;
-  setParent(directory: Directory): void;
-  getPath(): string;
-  toString(): string;
+  name: string
+  getType(): "File" | "Directory"
+  getParent(): Directory | null
+  setParent(directory: Directory): void
+  getPath(): string
+  toString(): string
 }
 
-export default FileSystemNode;
+export default FileSystemNode

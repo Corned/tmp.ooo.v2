@@ -1,45 +1,45 @@
-import Directory from "./directory";
-import FileSystemNode from "./FileSystemNode";
+import Directory from "./directory"
+import FileSystemNode from "./FileSystemNode"
 
 class File implements FileSystemNode {
-  #content: string;
-  #parent: Directory | null = null;
+  #content: string
+  #parent: Directory | null = null
 
   constructor(public name: string, content: string, parent: Directory | null = null) {
-    this.#content = content;
-    this.#parent = parent;
+    this.#content = content
+    this.#parent = parent
   }
 
   getType(): "File" {
-    return "File";
+    return "File"
   }
 
   read() {
-    return this.#content;
+    return this.#content
   }
 
   write(newContent: string) {
-    this.#content = newContent;
+    this.#content = newContent
   }
 
   setParent(directory: Directory) {
-    this.#parent = directory;
+    this.#parent = directory
   }
 
   getParent(): Directory | null {
-    return this.#parent;
+    return this.#parent
   }
 
   getPath(): string {
     if (this.#parent) {
-      return `${this.#parent.getPath()}/${this.name}`;
+      return `${this.#parent.getPath()}/${this.name}`
     }
-    return "/" + this.name; // Root level file
+    return "/" + this.name // Root level file
   }
 
   toString(): string {
-    return `File(${this.getPath()})`;
+    return `File(${this.getPath()})`
   }
 }
 
-export default File;
+export default File
