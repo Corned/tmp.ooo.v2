@@ -1,3 +1,5 @@
+/*
+
 export default function (...args: string[]): string {
   const expression: string = args.join("")
   const tokens: string[] = []
@@ -16,3 +18,4 @@ export default function (...args: string[]): string {
 
   return tokens.join("")
 }
+*/
