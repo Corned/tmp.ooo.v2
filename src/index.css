@@ -3,33 +3,13 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: "Rombi Technocrat Bold";
-  src: url(/src/assets/fonts/RombiTechnocratPersonalBold-51APB.otf);
-}
-
-@font-face {
-  font-family: "FiraCode Regular";
-  src: url(/src/assets/fonts/FiraCode-Regular.ttf);
-}
-
-@font-face {
-  font-family: "Roboto Mono";
-  src: url(/src/assets/fonts/RobotoMono-VariableFont_wght.ttf);
-}
-
-@font-face {
-  font-family: "Rubik";
-  src: url(/src/assets/fonts/Rubik-VariableFont_wght.ttf);
-}
-
-@font-face {
-  font-family: "Lexend";
-  src: url(/src/assets/fonts/Lexend-VariableFont_wght.ttf);
+  font-family: "ClassicConsole";
+  src: url(/src/assets/fonts/ClassicConsole.ttf);
 }
 
 * {
   box-sizing: border-box;
-  font-family: "Roboto Mono";
+  font-family: "ClassicConsole";
   color: white;
 
   margin: 0;
@@ -122,9 +102,4 @@ h3 {
     letter-spacing: 0px;
     text-shadow: rgba(255, 255, 255, 0.1) 0 0 50px;
   }
-}
-
-.terminal {
-  border: 1px solid #333333;
-  box-shadow: rgba(0, 0, 0, 0.7) 0px 7px 29px 0px;
 }
