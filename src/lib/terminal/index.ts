@@ -2,71 +2,90 @@ import ITerminalCell from "@/types/ITerminalCell"
 import ITerminalState from "@/types/ITerminalState"
 import { useState } from "react"
 
+const createDefaultCell = (): ITerminalCell => ({
+  char: " ",
+  color: "white",
+  bgColor: "#16161d",
+  bold: false,
+  italic: false,
+  underline: false,
+})
+
 const Terminal = (COLS = 128, ROWS = 64) => {
   const [state, setState] = useState<ITerminalState>({
     grid: Array.from({ length: ROWS }, () =>
-      Array.from({ length: COLS }, () => ({
-        char: " ",
-        color: "white",
-        bgColor: "#16161d",
-        bold: false,
-        italic: false,
-        underline: false,
-      }))
+      Array.from({ length: COLS }, () => createDefaultCell())
     ),
     cursorRow: 0,
     cursorCol: 0,
     cursorChar: "",
   })
 
-  const advanceCursor = (currentState: ITerminalState) => {
-    let newX = currentState.cursorCol + 1
-    let newY = currentState.cursorRow
-    if (newX >= COLS) {
-      newX = 0
-      newY += 1
+  const advanceCursor = (cursorCol: number, cursorRow: number) => {
+    let newCol = cursorCol + 1
+    let newRow = cursorRow
+
+    if (newCol >= COLS) {
+      newCol = 0
+      newRow += 1
     }
 
-    if (newY >= ROWS) {
-      newY = 0
+    if (newRow >= ROWS) {
+      newRow = 0
     }
 
-    return {
-      ...currentState,
-      cursorCol: newX,
-      cursorRow: newY,
-    }
+    return { cursorCol: newCol, cursorRow: newRow }
   }
 
-  const write = (currentState: ITerminalState, value: string) => {
-    const newGrid = [
-      ...currentState.grid.map((row: ITerminalCell[]) => [...row]),
-    ]
-
-    newGrid[currentState.cursorRow][currentState.cursorCol].char = value
-
-
-    return {
-      ...advanceCursor(currentState),
-      grid: newGrid,
-    }
+  const writeChar = (
+    grid: ITerminalCell[][],
+    cursorCol: number,
+    cursorRow: number,
+    char: string
+  ) => {
+    const newGrid = grid.map((row, rIdx) =>
+      row.map((cell, cIdx) =>
+        rIdx === cursorRow && cIdx === cursorCol
+          ? { ...cell, char }
+          : cell
+      )
+    )
+    return { grid: newGrid, ...advanceCursor(cursorCol, cursorRow) }
   }
 
-  const writeString = (currentState: ITerminalState, text: string) => {
-    let newState = { ...currentState }
-    for (const char of text) {
-      if (char === "\n") {
-        newState.cursorCol = 0
-        newState.cursorRow += 1
-        if (newState.cursorRow >= ROWS) {
-          newState.cursorRow = 0
+  const write = (char: string) => {
+    setState((prev) => {
+      const { grid, cursorCol, cursorRow } = writeChar(
+        prev.grid,
+        prev.cursorCol,
+        prev.cursorRow,
+        char
+      )
+      return { ...prev, grid, cursorCol, cursorRow }
+    })
+  }
+
+  const writeString = (text: string) => {
+    setState((prev) => {
+      let { grid, cursorCol, cursorRow } = prev
+
+      for (const char of text) {
+        if (char === "\n") {
+          cursorCol = 0
+          cursorRow += 1
+          if (cursorRow >= ROWS) {
+            cursorRow = 0
+          }
+        } else {
+          const result = writeChar(grid, cursorCol, cursorRow, char)
+          grid = result.grid
+          cursorCol = result.cursorCol
+          cursorRow = result.cursorRow
         }
-      } else {
-        newState = write(newState, char)
       }
-    }
 
-    return newState
+      return { ...prev, grid, cursorCol, cursorRow }
+    })
   }
 
   return [state, setState, write, writeString] as const

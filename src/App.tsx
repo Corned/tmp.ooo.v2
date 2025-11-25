@@ -1,39 +1,30 @@
 import React, { useEffect, useState } from "react"
 import Terminal from "./lib/terminal"
 import ITerminalCell from "./types/ITerminalCell"
+import { logo } from "./assets/logo"
 
 const COLS = 120
 const ROWS = 32
 const block = "█"
 
-const logo = `
-  ███████████ ██████   ██████ ███████████        ███████       ███████       ███████   
- ▒█▒▒▒███▒▒▒█▒▒██████ ██████ ▒▒███▒▒▒▒▒███     ███▒▒▒▒▒███   ███▒▒▒▒▒███   ███▒▒▒▒▒███ 
- ▒   ▒███  ▒  ▒███▒█████▒███  ▒███    ▒███    ███     ▒▒███ ███     ▒▒███ ███     ▒▒███
-     ▒███     ▒███▒▒███ ▒███  ▒██████████    ▒███      ▒███▒███      ▒███▒███      ▒███
-     ▒███     ▒███ ▒▒▒  ▒███  ▒███▒▒▒▒▒▒     ▒███      ▒███▒███      ▒███▒███      ▒███
-     ▒███     ▒███      ▒███  ▒███           ▒▒███     ███ ▒▒███     ███ ▒▒███     ███ 
-    █████    █████     █████ █████        ██ ▒▒▒███████▒   ▒▒▒███████▒   ▒▒▒███████▒   
-   ▒▒▒▒▒    ▒▒▒▒▒     ▒▒▒▒▒ ▒▒▒▒▒        ▒▒    ▒▒▒▒▒▒▒       ▒▒▒▒▒▒▒       ▒▒▒▒▒▒▒     
-`
-
 function App() {
-  const [ state, setState, write, writeString ] = Terminal(COLS, ROWS)
+  const [ state, setState, _write, writeString ] = Terminal(COLS, ROWS)
 
   useEffect(() => {
-    let stateCopy = { ...state }
+    // Center and write each line of the logo
     for (const line of logo.split("\n")) {
-      stateCopy.cursorCol = Math.floor((COLS - line.length) / 2)
-      stateCopy = writeString(stateCopy, line)
-      stateCopy = writeString(stateCopy, "\n")
+      setState(prev => ({ ...prev, cursorCol: Math.floor((COLS - line.length) / 2) }))
+      writeString(line + "\n")
     }
-    stateCopy = writeString(stateCopy, "\n")
-    const line = "Welcome to tmp.ooo!\n\n\n"
-    stateCopy.cursorCol = Math.floor((COLS - line.length) / 2)
-    stateCopy = writeString(stateCopy, line)
-    stateCopy = writeString(stateCopy, "\n\ntmp.ooo $ ")
-    setState(() => stateCopy)
 
+    // Write welcome message centered
+    const welcomeLine = "Welcome to tmp.ooo!"
+    setState(prev => ({ ...prev, cursorCol: Math.floor((COLS - welcomeLine.length) / 2) }))
+    writeString(welcomeLine + "\n\n\n")
+
+    // Write prompt
+    writeString("guest:developer $ ")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
