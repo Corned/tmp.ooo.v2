@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Terminal from "./lib/terminal"
+import useTerminal from "./lib/terminal"
 import ITerminalCell from "./types/ITerminalCell"
 import { logo } from "./assets/logo"
 
@@ -8,7 +8,7 @@ const ROWS = 32
 const block = "█"
 
 function App() {
-  const [ state, setState, _write, writeString ] = Terminal(COLS, ROWS)
+  const [ state, setState, _write, writeString ] = useTerminal(COLS, ROWS)
 
   useEffect(() => {
     // Center and write each line of the logo

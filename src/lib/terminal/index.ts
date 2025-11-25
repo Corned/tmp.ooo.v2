@@ -11,7 +11,7 @@ const createDefaultCell = (): ITerminalCell => ({
   underline: false,
 })
 
-const Terminal = (COLS = 128, ROWS = 64) => {
+const useTerminal = (COLS = 128, ROWS = 64) => {
   const [state, setState] = useState<ITerminalState>({
     grid: Array.from({ length: ROWS }, () =>
       Array.from({ length: COLS }, () => createDefaultCell())
@@ -91,4 +91,4 @@ const Terminal = (COLS = 128, ROWS = 64) => {
   return [state, setState, write, writeString] as const
 }
 
-export default Terminal
+export default useTerminal
